@@ -1,0 +1,52 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block title %}Edit Hotel{% endblock %}
+
+{% block body %}
+    <h1>Edit Hotel</h1>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Edit Category Page</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Edit Category</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="col-md-4"><a class="btn btn-block bg-gradient-info btn-lg" href="{{ path('admin_hotel_index') }}">Back To List</a>  </div>
+
+
+                    </div>
+                    <div class="card-body">
+
+                            <div class="col-md-4">
+                                {{ include('admin/hotel/_form.html.twig', {'button_label': 'Update'}) }}
+                            </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </section>
+            <!-- /.content -->
+        </div>
+            <!-- /.content-wrapper -->
+
+{% endblock %}
