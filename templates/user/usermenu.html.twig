@@ -2,14 +2,16 @@
     <aside>
         <div class="widget">
             <h4 class="rheading">User Menu<span></span></h4>
+            <img src="{{ asset('upload/images/' ~ app.user.image) }}" style="height: 80px" class="img-circle">
+            {{ app.user.name }} {{ app.user.surname }}
+
             <ul class="cat">
-                <li><a href="#">My Profile</a></li>
-                <li><a href="#">My Hotels (15)</a></li>
-                <li><a href="#">My Comments</a></li>
-                <li><a href="#">My Rezervations</a></li>
-                <li><a href="#">xxxxxx</a></li>
+                <li><a href="/user">My Profile</a></li>
+                <li><a href="/user/hotels">My Hotels</a></li>
+                <li><a href="/user/comments">My Comments</a></li>
+                <li><a href="/user/reservations">My Rezervations</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
-
     </aside>
 </div>

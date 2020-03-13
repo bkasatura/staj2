@@ -33,7 +33,7 @@
                     <!-- Default box -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Category List Table</h3>
+                            <h3 class="card-title">Hotel List Table</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"
@@ -45,9 +45,14 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="col-md-4">
-                                <a href="{{ path('admin_hotel_new') }}" class="btn btn-block btn-success">Create new +</a>
+                            <div class="row">
+                                <div class="col-md-8">
+                                </div>
+                                <div class="col-md-4">
+                                    <a href="{{ path('admin_hotel_new') }}" class="btn btn-block btn-success">Create new +</a>
+                                </div>
                             </div>
+
 
                             <table class="table">
                                 <thead>
@@ -58,10 +63,10 @@
                                     <th>Star</th>
                                     <th>Address</th>
                                     <th>City</th>
-                                    <th>Phone</th>
                                     <th>Email</th>
                                     <th>Country</th>
                                     <th>Gallery</th>
+                                    <th>Rooms</th>
                                     <th>Status</th>
 
                                 </tr>
@@ -76,7 +81,6 @@
                                         <td>{{ hotel.star }}</td>
                                         <td>{{ hotel.address }}</td>
                                         <td>{{ hotel.city }}</td>
-                                        <td>{{ hotel.phone }}</td>
                                         <td>{{ hotel.email }}</td>
                                         <td>{{ hotel.country }}</td>
                                         <td>
@@ -84,7 +88,15 @@
                                                 <img src="{{ asset('assets/admin/img') }}/gallery.PNG" height="40">
                                             </a>
                                         </td>
+
+                                        <td>
+                                            <a href="javascript:openWin('{{ path('admin_room_new',{'id':hotel.id }) }}','','toolbar=no,location=no,directories=0,status=no,top=50,left=100,menuBar=no,scrollBars=yes,resizable=no,width=900,height=600');">
+                                                <img src="{{ asset('assets/admin/img') }}/roomicon.PNG" height="40">
+                                            </a>
+                                        </td>
+
                                         <td>{{ hotel.status }}</td>
+
                                         <td>
                                             <a href="{{ path('admin_hotel_show', {'id': hotel.id}) }}" class="btn btn-block btn-info">Show</a>
                                         </td>

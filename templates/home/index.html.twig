@@ -31,45 +31,20 @@
             </div>
 
             <div class="row">
-                <div class="span3 features e_pulse">
-                    <img src="assets/img/dummies/img1.jpg" alt="" />
-                    <div class="box">
-                        <div class="divcenter">
-                            <a href="#"><i class="icon-circled icon-48 icon-magic active icon"></i></a>
-                            <h4>Responsive <br />twitter bootstrap</h4>
-                        </div>
-                    </div>
-                </div>
+                {% for mi in products %}
+
 
                 <div class="span3 features e_pulse">
-                    <img src="assets/img/dummies/img2.jpg" alt="" />
+                    <img src="{{ asset('upload/images/'~ mi.image()) }}" alt="" />
                     <div class="box">
                         <div class="divcenter">
-                            <a href="#"><i class="icon-circled icon-48 icon-briefcase icon"></i></a>
-                            <h4>Unparalleled <br />premium support</h4>
+                            <a href="{{ path('hotel_show', {'id': mi.id}) }}"><i class="icon-circled icon-48 icon-magic active icon"></i></a>
+                            <h4>{{ mi.title }}</h4>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
 
-                <div class="span3 features e_pulse">
-                    <img src="assets/img/dummies/img3.jpg" alt="" />
-                    <div class="box">
-                        <div class="divcenter">
-                            <a href="#"><i class="icon-circled icon-48 icon-cogs icon"></i></a>
-                            <h4>Valid <br />HTML code</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="span3 features e_pulse">
-                    <img src="assets/img/dummies/img4.jpg" alt="" />
-                    <div class="box">
-                        <div class="divcenter">
-                            <a href="#"><i class="icon-circled icon-48 icon-bullhorn icon"></i></a>
-                            <h4>Flexible <br />multi usage</h4>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="row">

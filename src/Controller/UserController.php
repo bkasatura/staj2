@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin\Comment;
+use App\Entity\Hotel;
 use App\Entity\User;
+use App\Form\Admin\CommentType;
 use App\Form\UserType;
+use App\Repository\Admin\CommentRepository;
 use App\Repository\UserRepository;
 use phpDocumentor\Reflection\File;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,12 +25,42 @@ class UserController extends AbstractController
     /**
      * @Route("/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(): Response
     {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
+        return $this->render('user/show.html.twig');
+    }
+
+    /**
+     * @Route("/comments", name="user_comments", methods={"GET"})
+     */
+    public function comments(CommentRepository $commentRepository): Response
+    {
+        $user = $this->getUser();
+        $comments=$commentRepository->getAllCommentsUser($user->getId());
+        return $this->render('user/comments.html.twig',[
+
+            'comments'=>$comments,
+
         ]);
     }
+
+    /**
+     * @Route("/hotels", name="user_hotels", methods={"GET"})
+     */
+    public function hotels(): Response
+    {
+        return $this->render('user/hotels.html.twig');
+    }
+
+    /**
+     * @Route("/reservations", name="user_reservations", methods={"GET"})
+     */
+    public function reservations(): Response
+    {
+        return $this->render('user/reservations.html.twig');
+    }
+
+
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
@@ -88,8 +122,16 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request,$id, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+
+        $user=$this->getUser();
+        if ($user->getId() != $id)
+        {
+            return $this->redirectToRoute('home');
+
+        }
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -155,4 +197,41 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * @Route("/newcomment/{id}", name="user_new_comment", methods={"GET","POST"})
+     */
+    public function newcomment(Request $request,Hotel $hotel): Response
+    {
+        //dd($hotel->getId());
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        $submittedToken =$request->request->get('token');
+
+        if ($form->isSubmitted()) {
+
+            if ($this->isCsrfTokenValid('comment-comment',$submittedToken)){
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $comment->setStatus('New');
+            $comment->setIp($_SERVER['REMOTE_ADDR']);
+            $comment->setHotelid($hotel->getId());
+            $user = $this->getUser();
+            $comment->setUserid($user->getId());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            $this->addFlash('success','Your Comment Send Has Been Successfuly');
+            return $this->redirectToRoute('hotel_show',['id'=>$hotel->getId()]);
+
+            }
+        }
+        return $this->redirectToRoute('hotel_show',['id'=>$hotel->getId()]);
+    }
+
+
+
+
+
 }

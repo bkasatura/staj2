@@ -61,7 +61,7 @@ class HotelType extends AbstractType
             ->add('email')
             ->add('city', ChoiceType::class,[
                 'choices'=> [
-
+                    'Nevada' => 'Nevada',
                     'Ankara' => 'Ankara',
                     'Istanbul' => 'Istanbul',
                     'Antalya' => 'Antalya',
@@ -73,7 +73,7 @@ class HotelType extends AbstractType
 
             ->add('country', ChoiceType::class,[
                 'choices' => [
-
+                    'USA' =>'USA',
                     'Turkiye' => 'Turkiye',
                     'Spain'  => 'Spain',
                     'Greece' => 'Greece',

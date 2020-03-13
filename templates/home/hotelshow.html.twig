@@ -1,0 +1,217 @@
+{% extends 'homebase.html.twig' %}
+
+{% block title %} {{ hotel.title }} {% endblock %}
+{% block keywords %} {{ hotel.keywords }} {% endblock %}
+{% block descrption %} {{ hotel.description }} {% endblock %}
+
+{% block body %}
+
+    <SCRIPT language="JavaScript" type="text/javascript">
+        function openWin(windowURL, windowName, windowFeatures) {
+            window.open(windowURL, windowName, windowFeatures);
+        }
+    </SCRIPT>
+
+    <section id="subintro">
+        <div class="container">
+            <div class="row">
+                <div class="span8">
+                    <ul class="breadcrumb">
+                        <li><a href="#"><i class="icon-home"></i></a><i class="icon-angle-right"></i></li>
+                        <li><a href="#">Hotel Detail</a><i class="icon-angle-right"></i></li>
+                        <li class="active">{{ hotel.title }}</li>
+                    </ul>
+                </div>
+                <div class="span4">
+                    <div class="search">
+                        <form class="input-append">
+                            <input class="search-form" id="appendedPrependedInput" type="text"
+                                   placeholder="Search here.."/>
+                            <button class="btn btn-dark" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="maincontent">
+        <div class="container">
+            <div class="row">
+                <div class="span7">
+
+                    <div id="mainslider" class="flexslider">
+                        <ul class="slides">
+
+                            <li data-thumb="{{ asset('upload/images/'~ hotel.image()) }}"
+                                style="height: 350px; width: 940px;">
+                                <img src="{{ asset('upload/images/'~ hotel.image()) }}"
+                                     style="height: 350px; width: 940px;"/>
+                                <a class="zoom" data-pretty="prettyPhoto"
+                                   href="{{ asset('upload/images/'~ hotel.image()) }}">
+                                    <i class="icon-zoom-in icon-rounded icon-48 active"></i>
+                                </a>
+                                <div class="flex-caption primary">
+                                    <h2>{{ hotel.title }}</h2>
+                                </div>
+                            </li>
+
+
+                            {% for rs in images %}
+                                <li data-thumb="{{ asset('upload/images/'~ rs.image()) }}"
+                                    style="height: 350px; width: 940px;">
+                                    <img src="{{ asset('upload/images/'~ rs.image()) }}"
+                                         style="height: 350px; width: 940px;"/>
+                                    <a class="zoom" data-pretty="prettyPhoto"
+                                       href="{{ asset('upload/images/'~ rs.image()) }}">
+                                        <i class="icon-zoom-in icon-rounded icon-48 active"></i>
+                                    </a>
+                                    <div class="flex-caption primary">
+                                        <h2>{{ rs.title }}</h2>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="span5">
+                    <!-- start article 1 -->
+                    <article class="blog-post">
+                        <div class="post-heading">
+                            <h3><a href="#">{{ hotel.title }}</a></h3>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="span8">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <th>Title</th>
+                                                <td>{{ hotel.title }}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Description</th>
+                                                <td>{{ hotel.description }}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Star</th>
+                                                <td>{{ hotel.star }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Address</th>
+                                                <td>{{ hotel.address }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>City</th>
+                                                <td>{{ hotel.city }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Country</th>
+                                                <td>{{ hotel.country }}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Phone</th>
+                                                <td>{{ hotel.phone }}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Email</th>
+                                                <td>{{ hotel.email }}</td>
+                                            </tr>
+
+
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+
+            <div class="tabbable tabs-top">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#one" data-toggle="tab"><i class="icon-briefcase"></i> Rooms & Price</a>
+                    </li>
+                    <li><a href="#two" data-toggle="tab">Detail</a></li>
+                    <li><a href="#three" data-toggle="tab">Comments</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="one">
+                        <p>
+                            <strong>Augue iriure</strong> dolorum per ex, ne iisque ornatus veritus duo. Ex nobis
+                            integre lucilius sit, pri ea falli ludus appareat. Eum quodsi fuisset id, nostro patrioque
+                            qui id. Nominati eloquentiam in mea.
+                        </p>
+                        <p>
+                            No eum sanctus vituperata reformidans, dicant abhorreant ut pro. Duo id enim iisque
+                            praesent, amet intellegat per et, solet referrentur eum et.
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="two">
+                        <p>
+                            {{ hotel.detail|raw }}
+                        </p>
+                    </div>
+                    <div class="tab-pane" id="three">
+
+                        {% for rs in comments %}
+                            <h3> {{ rs.subject }} Rate :{{ rs.rate }} </h3>
+                            <p>
+                                {{ rs.comment }}
+                            </p>
+                            <hr>
+                        {% endfor %}
+                        {% if app.user %}
+                        <form name="comment" action="{{ path('user_new_comment',{'id':hotel.id}) }}" method="post" role="form" class="contactForm">
+                            <div class="row">
+                                <div class="span4 form-group">
+                                    <input type="text" id="comment_subject"  name="comment[subject]" class="input-block-level"
+                                           placeholder="Comment Subject" data-rule="minlen:4"
+                                           data-msg="Please enter at least 4 chars"/>
+
+                                </div>
+                                <div class="span2 form-group">
+                                    <select id="comment_rate" name="comment[rate]" class="input-block-level">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+
+                                <div class="span6 form-group">
+                                    <textarea class="input-block-level" id="comment_comment" name="comment[comment]" rows="5" data-rule="required"
+                                              data-msg="Please write something for us" placeholder="Enter Your Comment"></textarea>
+
+                                    <div class="text-center">
+                                        <input type="hidden" name="token" value="{{ csrf_token('comment-comment') }}">
+                                        <button class="btn btn-theme" type="submit">Send a Comment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        {% else %}
+                            <li>
+                                <a href="/loginuser" > <i class="icon-lock"></i>Login</a>
+                            </li>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <!-- end tab -->
+
+
+        </div>
+    </section>
+{% endblock %}
